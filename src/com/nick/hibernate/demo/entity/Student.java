@@ -1,11 +1,17 @@
 package com.nick.hibernate.demo.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.nick.hibernate.demo.utils.DateUtils;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,12 +22,13 @@ import lombok.NoArgsConstructor;
 @Table(name = "student")
 public class Student {
 
-	public Student(String firstName, String lastName, String email) {
+	public Student(String firstName, String lastName, String email, Date dateOfBirth) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
+		this.dateOfBirth = dateOfBirth;
 	}	
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -35,4 +42,15 @@ public class Student {
 
 	@Column(name = "email")
 	private String email;
+	
+	@Column(name="date_of_birth")
+    @Temporal(TemporalType.DATE)    
+    private Date dateOfBirth;
+
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", dateOfBirth=" + DateUtils.formatDate(dateOfBirth) + "]";
+	}
+
 }
